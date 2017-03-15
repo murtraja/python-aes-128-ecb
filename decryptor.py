@@ -19,6 +19,7 @@ class AES_Decryptor:
         self.key=self.common.divide_bytes_into_grids(key)[0]
         self.keygen = keygen.Round_Key_Generator()
         self.round_keys = self.keygen.get_round_keys(self.key)
+        self.keygen.pg(self.round_keys)
         
     def step_inv_sbox(self, grid):
         size = 4

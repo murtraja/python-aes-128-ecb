@@ -73,6 +73,7 @@ class Round_Key_Generator:
             
             
 # previous_key = [[43, 40, 171, 9], [126, 174, 247, 207], [21, 210, 21, 79], [22, 166, 136, 60]]
+# previous_key = [[0x2B,0x28,0xAB,0x09],[0x7E,0xAE,0xF7,0xCF],[0x15,0xD2,0x15,0x4F],[0x16,0xA6,0x88,0x3C]]
 # keygen = Round_Key_Generator()
 # keygen.pg(keygen.get_round_keys(previous_key))
 
