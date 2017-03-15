@@ -9,7 +9,7 @@ class Round_Key_Generator:
     '''
     given a key, this generates
     all the required keys for the
-    rounds
+    rounds including the first round
     '''
     def __init__(self):
         self.common = Common_Operations()
@@ -49,25 +49,31 @@ class Round_Key_Generator:
         for r in range(1,11):
             round_keys.append(self.generate_key(round_keys[-1], r))
         return round_keys
-        
-    def pg(self,grid):
+    
+    def pv(self, v):
         pad = 2**8
-        for row in grid:
-            if type(row) is list:
-                for col in row:
-                    print hex(col+pad)[3:],
-            else:
-                print hex(row+pad)[3:],
-            print ""
+        print hex(v+pad)[3:],
+    def pg(self,grid):
+        if type(grid) is list:
+            for block in grid:
+                if type(block) is list:
+                    for row in block:
+                        if type(row) is list:
+                            for col in row:
+                                self.pv(col)
+                        else:
+                            self.pv(row)
+                        print ""
+                    print "--"
+                else:
+                    self.pv(block)
+        else:
+            self.pv(grid)
+        print ""
             
             
 # previous_key = [[43, 40, 171, 9], [126, 174, 247, 207], [21, 210, 21, 79], [22, 166, 136, 60]]
-# round_number = 1
 # keygen = Round_Key_Generator()
-# for r in range(1,11):
-#     new_key = keygen.generate_key(previous_key, r)
-#     pg(new_key)
-#     print "---end---",r
-#     previous_key = new_key
-# for k in keygen.get_round_keys(previous_key):
-#     keygen.pg(k)
+# keygen.pg(keygen.get_round_keys(previous_key))
+
+

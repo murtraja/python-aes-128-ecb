@@ -4,6 +4,8 @@ Created on 11-Mar-2017
 @author: murtraja
 '''
 
+import common
+import keygen
         
         
 class AES_Decryptor:
@@ -13,10 +15,10 @@ class AES_Decryptor:
     '''
     def __init__(self, cipher, key):
         self.cipher_text = cipher
-        self.key=key
-        self.round_key_arrays = []
-        self.make_arrays()
-        self.step_shift_rows(self.state_array[0])
+        self.common = common.Common_Operations()
+        self.key=self.common.divide_bytes_into_grids(key)[0]
+        self.keygen = keygen.Round_Key_Generator()
+        self.round_keys = self.keygen.get_round_keys(self.key)
         
     def step_inv_sbox(self, grid):
         size = 4
@@ -36,7 +38,7 @@ cipher = map(ord, base64.decodestring(open('c07.txt').read()))
 key = "YELLOW_SUBMARINE"
 key = map(ord, key)
 decryptor = AES_Decryptor(cipher,key)
-decryptor.make_arrays()
+
 
 
 
