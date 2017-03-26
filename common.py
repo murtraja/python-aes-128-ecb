@@ -62,9 +62,13 @@ class Common_Operations:
         sub_byte = self.sbox[lookup_byte]
         return sub_byte
     
+    def transpose(self, grid):
+        tr = [[grid[i][j] for i in range(len(grid))] for j in range(len(grid[0]))]
+        return tr
+    
     def divide_bytes_into_grids(self, input_bytes):
-        block_row_size = 4
-        block_total_size = block_row_size*block_row_size
+        block_column_size = 4
+        block_total_size = block_column_size*block_column_size
         '''
         B B    B B    B B
         B B    B B    B B are grids
@@ -77,10 +81,11 @@ class Common_Operations:
         '''
         grids = []
         for block in [input_bytes[i:i+block_total_size] for i in range(0,len(input_bytes),block_total_size)]:
-            rows = []
-            # now convert this block array to proper grid
-            for row in [block[i:i+block_row_size] for i in range(0, len(block), block_row_size)]:
-                rows.append(row)
+            columns = []
+            # now convert this block array to proper grid, column major form
+            for column in [block[i:i+block_column_size] for i in range(0, len(block), block_column_size)]:
+                columns.append(column)
+            rows = self.transpose(columns)
             grids.append(rows)
         return grids
     
